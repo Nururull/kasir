@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $makanan = \App\Models\Product::where('category_id', 1)->get();
+        $minuman = \App\Models\Product::where('category_id', 2)->get();
+        return view('home', compact('makanan', 'minuman'));
     }
 }
