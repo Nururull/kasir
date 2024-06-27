@@ -13,7 +13,7 @@ class ProductController extends Controller
     {
         $makanan = \App\Models\Product::where('category_id', 1)->get();
         $minuman = \App\Models\Product::where('category_id', 2)->get();
-        return view('home', compact('makanan', 'minuman'));
+        return view('admin.produk.index', compact('makanan', 'minuman'));
     }
 
     /**
@@ -22,15 +22,22 @@ class ProductController extends Controller
     public function create()
     {
         $category = \App\Models\Kategori::get();
-        return view('produk.create', compact('category'));
+        return view('admin.produk.create', compact('category'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        
+    { 
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Simpan gambar ke folder storage
+        $imageName = time().'.'.$request->image->extension();  
+        $request->image->move(public_path('images'), $imageName);
+
         \App\Models\Product::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
@@ -38,6 +45,7 @@ class ProductController extends Controller
             'original_price' => $request->original_price,
             'selling_price' => $request->selling_price,
             'quantity' => $request->quantity,
+            'image_path' => $imageName,
         ]);
 
         return redirect('product')->with('massage', 'Product Berhasil');
@@ -57,7 +65,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $data = \App\Models\Product::find($id);
-        return view('produk.edit', compact('data'));
+        return view('admin.produk.edit', compact('data'));
     }
 
     /**

@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
     <div class="container">
         <h1>Tambah Data Masakan</h1>
         <a class="btn btn-success fw-bold" href="index.php">Kembali</a>
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
             @method('POST')
             @csrf
+
             <div class="table-responsive-md my-3">
                 <table class="table">
                     <tr>
@@ -45,6 +46,11 @@
                         <td><label for="quantity">Stok</label></td>
                         <td>:</td>
                         <td><input min="0" type="number" name="quantity" id="quantity" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="gambar">Masukkan Gambar</label></td>
+                        <td>:</td>
+                        <td><input type="file" name="image" id="gambar" required></td>
                     </tr>
                     <tr>
                         <td></td>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('original_price');
             $table->integer('selling_price');
             $table->integer('quantity');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }
