@@ -5,7 +5,7 @@
     <div class="container-fluid">
         @foreach ($makanan as $item)
         <div class="card" style="width: 18rem;">
-            <img src="{{ asset('images/'.$item->image_path) }}" class="card-img-top" alt="...">
+            <img width="100px" src="{{ asset('images/'.$item->image_path) }}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{$item->name}}</h5>
               <p class="card-text">{{$item->description}}</p>
@@ -17,7 +17,7 @@
         @endforeach
         @foreach ($minuman as $item)
         <div class="card" style="width: 18rem;">
-            <img src="{{ asset('images/'.$item->image_path) }}" class="card-img-top" alt="...">
+            <img width="100px" src="{{ asset('images/'.$item->image_path) }}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{ $item->name}}</h5>
               <p class="card-text">{{$item->description}}</p>
