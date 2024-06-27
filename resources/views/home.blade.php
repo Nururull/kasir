@@ -21,6 +21,7 @@
     </div> --}}
     <div class="row">
         <div class="col-3 mt-2">
+            <h1>ini user</h1>
             <h3>Product
                 <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm float-end">+ Add Product</a>
             </h3>

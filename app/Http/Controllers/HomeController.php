@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,8 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $makanan = \App\Models\Product::where('category_id', 1)->get();
-        $minuman = \App\Models\Product::where('category_id', 2)->get();
-        return view('home', compact('makanan', 'minuman'));
+        if (Auth::user()->role == 'admin') {
+            $makanan = \App\Models\Product::where('category_id', 1)->get();
+            $minuman = \App\Models\Product::where('category_id', 2)->get();
+            return view('admin.produk.index', compact('makanan', 'minuman'));
+        } else {
+            $makanan = \App\Models\Product::where('category_id', 1)->get();
+            $minuman = \App\Models\Product::where('category_id', 2)->get();
+            return view('user.dashboard', compact('makanan', 'minuman'));
+        }
     }
 }

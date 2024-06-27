@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index()
     {
         $data = \App\Models\Kategori::paginate(6);
-        return view('kategori.index', compact('data'));
+        return view('admin.kategori.index', compact('data'));
     }
 
     /**
@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('kategori.create');
+        return view('admin.kategori.create');
         
     }
 
@@ -50,7 +50,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $data = \App\Models\Kategori::find($id);
-        return view('kategori.edit', compact('data'));
+        return view('admin.kategori.edit', compact('data'));
     }
 
     /**

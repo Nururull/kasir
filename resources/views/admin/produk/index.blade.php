@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -12,14 +12,15 @@
             </div>
             <div class="col-12 mb-2">
                 <div class="card">
-                    <div class="card-header">
+                    {{-- <div class="card-header">
                         <h1>Makanan</h1>
-                    </div>
+                    </div> --}}
                     <div class="card-body">
                         <table class="table table-striped table-hover">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col">Menu</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Gambar</th>
                                     <th scope="col">Descripsi</th>
                                     <th scope="col">Harga Beli</th>
                                     <th scope="col">Harga Jual</th>
@@ -28,9 +29,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @foreach ($makanan as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
+                                    <td><img src="{{ asset('images/'.$item->image_path) }}" alt=""></td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->original_price }}</td>
                                     <td>{{ $item->selling_price }}</td>
