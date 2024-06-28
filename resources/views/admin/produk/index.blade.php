@@ -32,7 +32,7 @@
                                 @foreach ($makanan as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
-                                    <td><img src="{{ asset('images/'.$item->image_path) }}" alt=""></td>
+                                    <td><img width="100px" src="{{ asset('images/'.$item->image_path) }}" alt=""></td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->original_price }}</td>
                                     <td>{{ $item->selling_price }}</td>
