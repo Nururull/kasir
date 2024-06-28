@@ -73,7 +73,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $data = \App\Models\Product::find($id);
+
+        if ($request->hasFile('image')) {
+            // Hapus file lama
+            if (file_exists(public_path('images/'.$data->image_path))) {
+                unlink(public_path('images/'.$data->image_path));
+            }
+    
+            // Unggah file baru
+            $imageName = time().'.'.$request->image->extension();  
+            $request->image->move(public_path('images'), $imageName);
+        }
+
         $data->update([
             'name' => $request->name,
             'category_id' => $request->category_id,
@@ -81,6 +97,7 @@ class ProductController extends Controller
             'original_price' => $request->original_price,
             'selling_price' => $request->selling_price,
             'quantity' => $request->quantity,
+            'image_path' => $imageName,
         ]);
 
         return redirect('product')->with('message', 'Berhasil!!');
@@ -96,7 +113,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        \App\Models\Product::find($id)->delete();
+        $data = \App\Models\Product::find($id);
+
+        // Hapus file lama
+        if (file_exists(public_path('images/'.$data->image_path))) {
+            unlink(public_path('images/'.$data->image_path));
+        }
+        $data->delete();
+        
         return redirect('product')->with('massage', 'Product Berhasil');
     }
 }

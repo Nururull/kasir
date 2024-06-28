@@ -5,7 +5,7 @@
     <div class="container">
         <h1>Tambah Data Masakan</h1>
         <a class="btn btn-success fw-bold" href="{{ URL('product') }}">Kembali</a>
-        <form action="{{ route('product.update', ['product' => $data->id]) }}" method="POST">
+        <form action="{{ route('product.update', ['product' => $data->id]) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="table-responsive-md my-3">
@@ -43,6 +43,14 @@
                         <td><label for="quantity">Stok</label></td>
                         <td>:</td>
                         <td><input min="0" type="number" name="quantity" id="quantity" value="{{ $data->quantity }}" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="gambar">Gambar</label></td>
+                        <td>:</td>
+                        <td>
+                            <img width="150px" src="{{ asset('images/'.$data->image_path) }}" alt="">
+                            <input type="file" name="image" id="gambar" required>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
