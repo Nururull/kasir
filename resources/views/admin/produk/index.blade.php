@@ -32,7 +32,7 @@
                                 @foreach ($makanan as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
-                                    <td><img src="{{ asset('images/'.$item->image_path) }}" alt=""></td>
+                                    <td><img width="100px" src="{{ asset('images/'.$item->image_path) }}" alt=""></td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->original_price }}</td>
                                     <td>{{ $item->selling_price }}</td>
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h1>Minuman</h1>
@@ -100,7 +100,8 @@
                         <table class="table table-striped table-hover">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col">Menu</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Gambar</th>
                                     <th scope="col">Descripsi</th>
                                     <th scope="col">Harga Beli</th>
                                     <th scope="col">Harga Jual</th>
@@ -112,6 +113,7 @@
                             @foreach ($minuman as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
+                                    <td><img width="100px" src="{{ asset('images/'.$item->image_path) }}" alt=""></td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->original_price }}</td>
                                     <td>{{ $item->selling_price }}</td>
@@ -142,7 +144,7 @@
                     </div>
                 </div>
 
-            </div> --}}
+            </div>
         </div>
     </div>
 
