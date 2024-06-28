@@ -29,16 +29,40 @@
                                             <a class="btn btn-warning" href="{{ route('category.edit', ['category' => $item->id]) }}">
                                                 Edit
                                             </a>
-                                            <form action="{{ route('category.destroy', $item->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-primary">Hapus</button>
-                                            </form>
+
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#categoryDelete/{{ $item->id }}">
+                                                Delete
+                                            </button>
+
+                                            {{-- MODAL HAPUS --}}
+                                            <div class="modal fade" id="categoryDelete/{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title fw-semibold poppins" id="exampleModalLabel">Hapus Data
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Data: 
+                                                            <p class="text-primary fw-bold">
+                                                                {{ $item->category }}
+                                                            </p>
+                                                            Apakah anda yakin data tersebut akan dihapus?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                            <form action="{{ route('category.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-primary">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
-                                    
-                                    
-                                    
                                 </table>
                             </div>
                         </div>

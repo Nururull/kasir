@@ -12,9 +12,9 @@
             </div>
             <div class="col-12 mb-2">
                 <div class="card">
-                    {{-- <div class="card-header">
+                    <div class="card-header">
                         <h1>Makanan</h1>
-                    </div> --}}
+                    </div>
                     <div class="card-body">
                         <table class="table table-striped table-hover">
                             <thead class="table-dark">
@@ -50,42 +50,40 @@
                                             Edit
                                         </a>
 
-                                        <form action="{{ route('product.destroy', $item->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-primary">Hapus</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#productDelete/{{ $item->id }}">
+                                            Delete
+                                        </button>
+
+                                        {{-- MODAL HAPUS --}}
+                                        <div class="modal fade" id="productDelete/{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fw-semibold poppins" id="exampleModalLabel">Hapus Data
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Data: 
+                                                        <p class="text-primary fw-bold">
+                                                            {{ $item->name }}
+                                                        </p>
+                                                        Apakah anda yakin data tersebut akan dihapus?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('product.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-primary">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
-                            {{-- @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->original_price }}</td>
-                                    <td>{{ $item->selling_price }}</td>
-                                    <td>
-                                        @if ($item->quantity <= 10)
-                                        <a class="btn btn-warning" href="{{ route('product.edit', ['product' => $item->id]) }}">
-                                            Update
-                                        </a>
-                                        @else
-                                        {{ $item->quantity }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-warning" href="{{ route('product.edit', ['product' => $item->id]) }}">
-                                            Edit
-                                        </a>
-
-                                        <form action="{{ route('product.destroy', $item->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-primary">Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -131,11 +129,37 @@
                                             Edit
                                         </a>
 
-                                        <form action="{{ route('product.destroy', $item->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-primary">Hapus</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#productDelete/{{ $item->id }}">
+                                            Delete
+                                        </button>
+
+                                        {{-- MODAL HAPUS --}}
+                                        <div class="modal fade" id="productDelete/{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fw-semibold poppins" id="exampleModalLabel">Hapus Data
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Data: 
+                                                        <p class="text-primary fw-bold">
+                                                            {{ $item->name }}
+                                                        </p>
+                                                        Apakah anda yakin data tersebut akan dihapus?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('product.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-primary">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
