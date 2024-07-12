@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use \App\Models\Kategori;
 use \App\Models\Pesanan;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -28,9 +29,14 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function kategori(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Kategori::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity')->withTimestamps();
     }
 
 }
