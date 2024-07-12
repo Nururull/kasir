@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CartController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -10,25 +15,21 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/products', [App\Http\Controllers\HomeController::class, 'index'])->name('products.search');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/pesan', [App\Http\Controllers\HomeController::class, 'index'])->name('pesan');
+Route::get('/products', [HomeController::class, 'index'])->name('products.search');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/pesan', [HomeController::class, 'index'])->name('pesan');
 
-Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'index']);
-Route::get('/pesanan/{id}', [App\Http\Controllers\Admin\UserController::class, 'show']);
-Route::post('/pesanan/store', [App\Http\Controllers\Admin\UserController::class, 'store']);
+// Route::get('/user', UserController::class, 'index']);
+// Route::get('/pesanan/{id}', UserController::class, 'show']);
+// Route::post('/pesanan/store', UserController::class, 'store']);
 
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart/remove/{index}', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/order/history', [CartController::class, 'history'])->name('order.history');
+Route::delete('/order/{id}', [cartController::class, 'destroy'])->name('order.destroy');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
-    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('product', ProductController::class);
+    Route::resource('category', CategoryController::class);
 });
-
-Route::get('/a', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('products.index');
-Route::get('/cart', [\App\Http\Controllers\Admin\CartController::class, 'index'])->name('cart.index');
-Route::get('/cart/add/{product}', [\App\Http\Controllers\Admin\CartController::class, 'add'])->name('cart.add');
-Route::get('/cart/remove/{index}', [\App\Http\Controllers\Admin\CartController::class, 'remove'])->name('cart.remove');
-Route::get('/cart/checkout', [\App\Http\Controllers\Admin\CartController::class, 'checkout'])->name('cart.checkout');
-
-
-

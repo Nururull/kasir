@@ -2,12 +2,12 @@
 
 @section('content')
 <!-- Fruits Shop Start-->
-<div class="container-fluid fruite py-5">
+<div class="container-fluid fruite py-5" style="margin-top: 100px">
     <div class="container py-5">
         <div class="tab-class text-center">
             <div class="row g-4">
                 <div class="col-lg-4 text-start">
-                    <h1>Our Organic Products</h1>
+                    <h1>Produk Kami</h1>
                 </div>
                 <div class="col-lg-8 text-end">
                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
@@ -43,9 +43,16 @@
                                             <p>{{ $item->description }}</p>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">Rp. {{ number_format($item->selling_price, 2) }}/ kg</p>
-                                                <a href="{{ route('cart.add', $item->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                {{-- <a href="{{ route('cart.add', $item->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
                                                     <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                </a>
+                                                </a> --}}
+                                                <form action="{{ route('cart.add', $item->id) }}" method="POST" >
+                                                    @csrf
+                                                    <input type="hidden" name="quantity" value="1" min="1">
+                                                    <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

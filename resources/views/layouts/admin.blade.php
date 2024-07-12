@@ -50,6 +50,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('order.history') }}">History</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('product.index') }}">Product</a>
                             </li>
                             <li class="nav-item">

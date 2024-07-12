@@ -3,41 +3,68 @@
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Keranjang Belanja</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex align-items-center">
                 <div class="container mt-5">
-                    <div class="row">
-                        <!-- Daftar Produk -->
-                        <div class="col-md-6">
-                            <h2>Daftar Produk</h2>
-                            <ul class="list-group" id="product-list">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Produk 1
-                                    <button class="btn btn-primary btn-sm" onclick="addToCart('Produk 1', 10000)">Tambah</button>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Produk 2
-                                    <button class="btn btn-primary btn-sm" onclick="addToCart('Produk 2', 15000)">Tambah</button>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Produk 3
-                                    <button class="btn btn-primary btn-sm" onclick="addToCart('Produk 3', 20000)">Tambah</button>
-                                </li>
-                            </ul>
-                        </div>
-                
-                        <!-- Keranjang Belanja -->
-                        <div class="col-md-6">
-                            <h2>Keranjang Belanja</h2>
-                            <ul class="list-group" id="cart-list"></ul>
-                            <div class="mt-3">
-                                <h4>Total: Rp <span id="total-price">0</span></h4>
-                                <button class="btn btn-success" onclick="checkout()">Checkout</button>
+
+                    @if (count($cart) > 0)
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Produk</th>
+                                                    <th>Harga</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Total</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($cart as $index => $item)
+                                                    <tr>
+                                                        <td>
+                                                            <img src="{{ asset('images/' . $item['product']['image_path']) }}"
+                                                                alt="{{ $item['product']['name'] }}"
+                                                                class="img-thumbnail" style="width: 100px;">
+                                                            {{ $item['product']['name'] }}
+                                                        </td>
+                                                        <td>Rp. {{ number_format($item['price'], 2) }}</td>
+                                                        <td>{{ $item['product']['quantity'] }}</td>
+                                                        <td>Rp.
+                                                            {{ number_format($item['price'] * $item['product']['quantity'], 2) }}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('cart.remove', $index) }}"
+                                                                class="btn btn-sm btn-danger">Hapus</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Ringkasan Belanja</h5>
+                                        <p class="card-text">Total Harga: Rp. {{ number_format($totalPrice, 2) }}</p>
+                                        <a href="{{ route('cart.checkout') }}" class="btn btn-primary">Checkout</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="alert alert-info" role="alert">
+                            Keranjang belanja Anda kosong.
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

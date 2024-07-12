@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -35,6 +36,11 @@ class HomeController extends Controller
             $product = Product::where('category_id', $selectedCategoryId)->get();
         }
 
-        return view('home', compact('category', 'product', 'selectedCategoryId'));
+        $cart = Session::get('cart', []);
+        $totalPrice = array_sum(array_map(function ($item) {
+            return $item['price'] * $item['product']['quantity'];
+        }, $cart));
+
+        return view('home', compact('category', 'product', 'selectedCategoryId', 'cart', 'totalPrice'));
     }
 }

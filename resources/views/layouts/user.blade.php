@@ -32,7 +32,6 @@
 </head>
 <body>
         @include('layouts.user.navbar')
-        @include('layouts.user.header')
 
         @yield('content')
 
