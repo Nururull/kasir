@@ -87,8 +87,11 @@
     </div>
 </div>
 <!-- Navbar End -->
-
+@auth
 @include('user.cart')
+    
+@endauth
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

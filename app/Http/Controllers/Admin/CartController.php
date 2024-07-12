@@ -77,9 +77,11 @@ class CartController extends Controller
     {
         $cart = Session::get('cart', []);
 
+        $user = Auth::user()->id;
+
         if (count($cart) > 0) {
             $order = Order::create([
-                'user_id' => Auth::id(),
+                'user_id' => $user,
                 'total_price' => array_sum(array_map(function ($item) {
                     return $item['price'] * $item['product']['quantity'];
                 }, $cart)),

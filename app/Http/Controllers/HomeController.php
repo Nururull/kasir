@@ -15,10 +15,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -27,6 +27,26 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::check())
+        {
+            $category = Category::paginate(4);
+            $selectedCategoryId = $request->query('category', 'all');
+
+            if ($selectedCategoryId === 'all') {
+                $product = Product::all();
+            } else {
+                $product = Product::where('category_id', $selectedCategoryId)->get();
+            }
+
+            $cart = Session::get('cart', []);
+            $totalPrice = array_sum(array_map(function ($item) {
+                return $item['price'] * $item['product']['quantity'];
+            }, $cart));
+
+            return view('home', compact('category', 'product', 'selectedCategoryId', 'cart', 'totalPrice'));
+
+        }
+
         $category = Category::paginate(4);
         $selectedCategoryId = $request->query('category', 'all');
 
@@ -36,11 +56,6 @@ class HomeController extends Controller
             $product = Product::where('category_id', $selectedCategoryId)->get();
         }
 
-        $cart = Session::get('cart', []);
-        $totalPrice = array_sum(array_map(function ($item) {
-            return $item['price'] * $item['product']['quantity'];
-        }, $cart));
-
-        return view('home', compact('category', 'product', 'selectedCategoryId', 'cart', 'totalPrice'));
+        return view('home', compact('category', 'product', 'selectedCategoryId'));
     }
 }
