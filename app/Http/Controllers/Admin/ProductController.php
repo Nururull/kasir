@@ -12,8 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = \App\Models\Product::all();
-        return view('admin.produk.index', compact('data'));
+        $product = \App\Models\Product::all();
+        return view('admin.produk.index', compact('product'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductController extends Controller
             'image_path' => $imageName,
         ]);
 
-        return redirect('product')->with('massage', 'Product Berhasil');
+        return redirect(route('product.index'))->with('massage', 'Product Berhasil');
     }
 
     /**
@@ -64,8 +64,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $data = \App\Models\Product::find($id);
-        return view('admin.produk.edit', compact('data'));
+        $product = \App\Models\Product::find($id);
+        $category = \App\Models\Category::all();
+        return view('admin.produk.edit', compact('product', 'category'));
     }
 
     /**
@@ -100,7 +101,7 @@ class ProductController extends Controller
             'image_path' => $imageName,
         ]);
 
-        return redirect('product')->with('message', 'Berhasil!!');
+        return redirect(route('product.index'))->with('message', 'Berhasil!!');
     }
 
     public function order()
@@ -121,6 +122,6 @@ class ProductController extends Controller
         }
         $data->delete();
         
-        return redirect('product')->with('massage', 'Product Berhasil');
+        return redirect('product.index')->with('massage', 'Product Berhasil');
     }
 }

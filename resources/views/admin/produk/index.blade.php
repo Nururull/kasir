@@ -18,6 +18,7 @@
                                 <tr>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Gambar</th>
+                                    <th scope="col">Kategori</th>
                                     <th scope="col">Descripsi</th>
                                     <th scope="col">Harga Beli</th>
                                     <th scope="col">Harga Jual</th>
@@ -26,10 +27,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @foreach ($product as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td><img width="100px" src="{{ asset('images/'.$item->image_path) }}" alt="gambar"></td>
+                                    <td>{{ $item->category->name }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>Rp. {{ number_format($item->original_price, 2) }}</td>
                                     <td>Rp. {{ number_format($item->selling_price, 2) }}</td>
@@ -106,6 +108,11 @@
                                                                     <td>{{ $item->name }}</td>
                                                                 </tr>
                                                                 <tr class="border-bottom">
+                                                                    <td class="fw-bold">Kategori</td>
+                                                                    <td style="width: 1px;">:</td>
+                                                                    <td>{{ $item->category->name }}</td>
+                                                                </tr>
+                                                                <tr class="border-bottom">
                                                                     <td class="fw-bold">Description</td>
                                                                     <td style="width: 1px;">:</td>
                                                                     <td>{{ $item->description }}</td>
@@ -119,6 +126,11 @@
                                                                     <td class="fw-bold">Harga Jual</td>
                                                                     <td style="width: 1px;">:</td>
                                                                     <td>{{ $item->selling_price }}</td>
+                                                                </tr>
+                                                                <tr class="border-bottom">
+                                                                    <td class="fw-bold">Stok</td>
+                                                                    <td style="width: 1px;">:</td>
+                                                                    <td>{{ $item->quantity }}</td>
                                                                 </tr>
                                                             </table>
                                                         </div>

@@ -50,8 +50,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $data = \App\Models\Category::find($id);
-        return view('admin.category.edit', compact('data'));
+        $category = \App\Models\Category::find($id);
+        return view('admin.category.edit', compact('category'));
     }
 
     /**

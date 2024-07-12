@@ -14,7 +14,7 @@
                 @foreach ($category as $item)
                     <div class="col-sm-4 mx-auto m-2">
                         <div class="card">
-                            <h5 class="card-header bg-info">{{ $item->nama }}</h5>
+                            <h5 class="card-header bg-info">{{ $item->name }}</h5>
                             <div class="card-body">
                                 <table class="table table-striped table-responsive-sm">
                                     <tr>

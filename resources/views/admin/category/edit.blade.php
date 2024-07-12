@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Tambah Data Kategori</h1>
         <a class="btn btn-success fw-bold" href="index.php">Kembali</a>
-        <form action="{{ route('category.update', ['category' => $data->id]) }}" method="POST">
+        <form action="{{ route('category.update', ['category' => $category->id]) }}" method="POST">
             @method('PUT')
             @csrf
             <div class="table-responsive-md my-3">
@@ -12,7 +12,7 @@
                     <tr>
                         <td><label for="nama">Nama Kategori</label></td>
                         <td>:</td>
-                        <td><input autocomplete="off" type="text" name="category" id="nama" value="{{ $data->category }}" required></td>
+                        <td><input autocomplete="off" type="text" name="category" id="nama" value="{{ $category->name }}" required></td>
                     </tr>
                     <tr>
                         <td></td>
