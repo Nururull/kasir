@@ -36,6 +36,8 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Hapus Pesanan</button>
                     </form>
+                    <a href="{{ route('history.pdf', $order->id) }}" class="mx-3 btn btn-info"
+                        target="_blank">Download PDF</a>
                 </div>
             </div>
         @endforeach

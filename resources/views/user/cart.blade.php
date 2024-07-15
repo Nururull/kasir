@@ -11,13 +11,14 @@
 
                     @if (count($cart) > 0)
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-9">
                                 <div class="card">
                                     <div class="card-body">
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Produk</th>
+                                                    <th>Nama</th>
                                                     <th>Harga</th>
                                                     <th>Jumlah</th>
                                                     <th>Total</th>
@@ -31,6 +32,8 @@
                                                             <img src="{{ asset('images/' . $item['product']['image_path']) }}"
                                                                 alt="{{ $item['product']['name'] }}"
                                                                 class="img-thumbnail" style="width: 100px;">
+                                                        </td>
+                                                        <td>
                                                             {{ $item['product']['name'] }}
                                                         </td>
                                                         <td>Rp. {{ number_format($item['price'], 2) }}</td>
@@ -49,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Ringkasan Belanja</h5>

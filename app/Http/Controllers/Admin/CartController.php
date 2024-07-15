@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class CartController extends Controller
 {
@@ -25,6 +26,7 @@ class CartController extends Controller
 
     public function add(Request $request, Product $product)
     {
+        $user = Auth::user();
         $cart = Session::get('cart', []);
 
         // Cek jika produk sudah ada di keranjang
@@ -44,7 +46,7 @@ class CartController extends Controller
             $cart[] = [
                 'product' => [
                     'id' => $product->id,
-                    'name' => $product->name,
+                    'name' => $user->name,
                     'category_id' => $product->category_id,
                     'description' => $product->description,
                     'original_price' => $product->original_price,
@@ -61,7 +63,7 @@ class CartController extends Controller
         // Set flash session dengan jumlah item di keranjang
         Session::flash('cartCount', count($cart));
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Berhasil disimpan di cart!');
     }
 
     public function remove($index)
@@ -127,5 +129,21 @@ class CartController extends Controller
         } else {
             return redirect()->route('order.history')->with('error', 'Order not found!');
         }
+    }
+
+    public function pdf($order)
+    {
+        // Ambil data pesanan
+        $order = Order::findOrFail($order);
+        // $cartItems = Order::with('products')->where('user_id', $userId)->get();
+
+        // Load view data into the PDF
+        $pdf = PDF::loadView('admin.pdf', compact('order'));
+
+        // Optional: Set paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+
+        // Generate and return the PDF for download or display
+        return $pdf->stream('order_' . $order->id . '.pdf');
     }
 }

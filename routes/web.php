@@ -14,7 +14,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::get('/products', [HomeController::class, 'index'])->name('products.search');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -25,7 +24,9 @@ Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.ch
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class);
+    Route::resource('user', UserController::class);
 
     Route::get('/order/history', [CartController::class, 'history'])->name('order.history');
-    Route::delete('/order/{id}', [cartController::class, 'destroy'])->name('order.destroy');
+    Route::delete('/order/{id}', [CartController::class, 'destroy'])->name('order.destroy');
+    Route::get('/histori/{id}/pdf', [CartController::class, 'pdf'])->name('history.pdf');
 });

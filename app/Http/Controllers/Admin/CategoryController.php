@@ -72,7 +72,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        \App\Models\Category::find($id)->delete();
+        $category = \App\Models\Category::find($id);
+        // Periksa apakah kategori memiliki produk yang terkait
+        if ($category->product()->count() > 0) {
+            return redirect()->route('category.index')->with('error', 'Kategori tidak bisa dihapus karena masih terkait dengan produk.');
+        }
+
+        $category->delete();
         return redirect('category.index')->with('success', 'Kategori Berhasil dihapus');
     }
 }

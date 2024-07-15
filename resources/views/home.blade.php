@@ -46,6 +46,7 @@
                                                 {{-- <a href="{{ route('cart.add', $item->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
                                                     <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                 </a> --}}
+                                                @auth
                                                 <form action="{{ route('cart.add', $item->id) }}" method="POST" >
                                                     @csrf
                                                     <input type="hidden" name="quantity" value="1" min="1">
@@ -53,6 +54,14 @@
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </form>
+                                                @endauth
+
+                                                @guest
+                                                <a href="{{ route('login') }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                </a>
+                                                @endguest
+
                                             </div>
                                         </div>
                                     </div>
