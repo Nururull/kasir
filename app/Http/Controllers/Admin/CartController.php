@@ -9,7 +9,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Barryvdh\DomPDF\Facade\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CartController extends Controller
 {
@@ -138,7 +138,7 @@ class CartController extends Controller
         // $cartItems = Order::with('products')->where('user_id', $userId)->get();
 
         // Load view data into the PDF
-        $pdf = PDF::loadView('admin.pdf', compact('order'));
+        $pdf = Pdf::loadView('admin.pdf', compact('order'));
 
         // Optional: Set paper size and orientation
         $pdf->setPaper('A4', 'landscape');

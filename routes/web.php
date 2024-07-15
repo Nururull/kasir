@@ -26,6 +26,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('category', CategoryController::class);
     Route::resource('user', UserController::class);
 
+    Route::get('/search', [ProductController::class, 'search'])->name('products.search');
+
     Route::get('/order/history', [CartController::class, 'history'])->name('order.history');
     Route::delete('/order/{id}', [CartController::class, 'destroy'])->name('order.destroy');
     Route::get('/histori/{id}/pdf', [CartController::class, 'pdf'])->name('history.pdf');

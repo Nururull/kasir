@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -123,5 +124,32 @@ class ProductController extends Controller
         $data->delete();
         
         return redirect('product.index')->with('massage', 'Product Berhasil');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $product = \App\Models\Product::where('name', 'like', '%'.$search.'%')
+                           ->orWhere('description', 'like', '%'.$search.'%')
+                           ->get();
+
+        return view('admin.produk.index', compact('product'));
+    }
+
+    public function export()
+    {
+
+        // Ambil data pesanan
+        $products = \App\Models\Product::all();
+        // $cartItems = Order::with('products')->where('user_id', $userId)->get();
+        
+        // Load view data into the PDF
+        $pdf = Pdf::loadView('admin.pdf.products', compact('products'));
+        
+        $pdf->setPaper('A4', 'landscape');
+
+        // Generate and return the PDF for download or display
+        return $pdf->stream('Product.pdf');
     }
 }
