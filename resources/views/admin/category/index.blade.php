@@ -40,12 +40,12 @@
                                     </a>
 
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#categoryDelete/{{ $item->id }}">
+                                        data-bs-target="#categoryDelete{{ $item->id }}">
                                         Delete
                                     </button>
 
                                     {{-- MODAL HAPUS --}}
-                                    <div class="modal fade" id="categoryDelete/{{ $item->id }}" tabindex="-1"
+                                    <div class="modal fade" id="categoryDelete{{ $item->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

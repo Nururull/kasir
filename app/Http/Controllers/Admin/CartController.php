@@ -26,7 +26,6 @@ class CartController extends Controller
 
     public function add(Request $request, Product $product)
     {
-        $user = Auth::user();
         $cart = Session::get('cart', []);
 
         // Cek jika produk sudah ada di keranjang
@@ -46,12 +45,13 @@ class CartController extends Controller
             $cart[] = [
                 'product' => [
                     'id' => $product->id,
-                    'name' => $user->name,
+                    'name' => $product->name,
                     'category_id' => $product->category_id,
                     'description' => $product->description,
                     'original_price' => $product->original_price,
                     'selling_price' => $product->selling_price,
                     'quantity' => $request->quantity,
+                    'max_quantity' => $product->quantity, // Tambahkan jumlah stok yang tersedia
                     'image_path' => $product->image_path,
                 ],
                 'price' => $product->selling_price
@@ -64,6 +64,17 @@ class CartController extends Controller
         Session::flash('cartCount', count($cart));
 
         return redirect()->route('home')->with('success', 'Berhasil disimpan di cart!');
+    }
+
+    public function update(Request $request, $index)
+    {
+        $cart = Session::get('cart', []);
+        if (isset($cart[$index])) {
+            $cart[$index]['product']['quantity'] = $request->quantity;
+            Session::put('cart', $cart);
+        }
+
+        return redirect()->route('home')->with('success', 'Kuantitas produk berhasil diperbarui!');
     }
 
     public function remove($index)
@@ -82,6 +93,19 @@ class CartController extends Controller
         $user = Auth::user()->id;
 
         if (count($cart) > 0) {
+            // Periksa apakah ada produk dengan quantity 0 di keranjang
+            foreach ($cart as $item) {
+                if ($item['product']['quantity'] == 0) {
+                    return redirect()->route('home')->with('error', 'Terdapat produk dengan jumlah 0 di keranjang Anda.');
+                }
+
+                // Periksa apakah quantity produk di database mencukupi
+                $product = Product::find($item['product']['id']);
+                if (!$product || $product->quantity < $item['product']['quantity']) {
+                    return redirect()->route('home')->with('error', 'Jumlah produk "' . $product->name . '" tidak mencukupi.');
+                }
+            }
+
             $order = Order::create([
                 'user_id' => $user,
                 'total_price' => array_sum(array_map(function ($item) {
@@ -99,11 +123,8 @@ class CartController extends Controller
                 ]);
 
                 // Kurangi quantity produk di database
-                $product = Product::find($item['product']['id']);
-                if ($product) {
-                    $product->quantity -= $item['product']['quantity'];
-                    $product->save();
-                }
+                $product->quantity -= $item['product']['quantity'];
+                $product->save();
             }
 
             Session::forget('cart');
@@ -115,14 +136,14 @@ class CartController extends Controller
 
     public function history()
     {
-        $orders = Order::where('user_id', Auth::id())->with('product.product')->get();
+        $orders = Order::with('product.product')->get();
         return view('admin.history', compact('orders'));
     }
 
     public function destroy($id)
     {
         $order = Order::find($id);
-        
+
         if ($order) {
             $order->delete();
             return redirect()->route('order.history')->with('success', 'Order deleted successfully!');

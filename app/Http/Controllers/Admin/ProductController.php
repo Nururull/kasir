@@ -76,7 +76,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $data = \App\Models\Product::find($id);
@@ -90,6 +90,8 @@ class ProductController extends Controller
             // Unggah file baru
             $imageName = time().'.'.$request->image->extension();  
             $request->image->move(public_path('images'), $imageName);
+
+            $data->image_path = $imageName;
         }
 
         $data->update([
@@ -99,7 +101,7 @@ class ProductController extends Controller
             'original_price' => $request->original_price,
             'selling_price' => $request->selling_price,
             'quantity' => $request->quantity,
-            'image_path' => $imageName,
+            'image_path' => $data->image_path,
         ]);
 
         return redirect(route('product.index'))->with('message', 'Berhasil!!');
@@ -123,7 +125,7 @@ class ProductController extends Controller
         }
         $data->delete();
         
-        return redirect('product.index')->with('massage', 'Product Berhasil');
+        return redirect(route('product.index'))->with('massage', 'Product Berhasil');
     }
 
     public function search(Request $request)

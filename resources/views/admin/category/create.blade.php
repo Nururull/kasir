@@ -13,7 +13,7 @@
                     <tr>
                         <td><label for="nama">Nama Kategori</label></td>
                         <td>:</td>
-                        <td><input autocomplete="off" type="text" name="name" id="nama" required></td>
+                        <td><input class="form-control" autocomplete="off" type="text" name="name" id="nama" required></td>
                     </tr>
                     <tr>
                         <td></td>

@@ -49,18 +49,18 @@
                 <thead>
                     <tr>
                         <th>Product</th>
+                        <th>Kategori</th>
                         <th>Quantity</th>
                         <th>Price</th>
-                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($order->product as $item)
                         <tr>
                             <td>{{ $item->product->name }}</td>
+                            <td>{{ $item->product->category->name }}</td>
                             <td>{{ $item->quantity }}</td>
                             <td>Rp. {{ number_format($item->price, 2) }}</td>
-                            <td>Rp. {{ number_format($item->price * $item->quantity, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>

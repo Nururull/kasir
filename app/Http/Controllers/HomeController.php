@@ -27,27 +27,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        // if (Auth::check())
-        // {
-        //     $category = Category::paginate(4);
-        //     $selectedCategoryId = $request->query('category', 'all');
-
-        //     if ($selectedCategoryId === 'all') {
-        //         $product = Product::all();
-        //     } else {
-        //         $product = Product::where('category_id', $selectedCategoryId)->get();
-        //     }
-
-        //     $cart = Session::get('cart', []);
-        //     $totalPrice = array_sum(array_map(function ($item) {
-        //         return $item['price'] * $item['product']['quantity'];
-        //     }, $cart));
-
-        //     return view('home', compact('category', 'product', 'selectedCategoryId', 'cart', 'totalPrice'));
-
-        // }
-
-        $category = Category::paginate(4);
+        $category = Category::all();
         $selectedCategoryId = $request->query('category', 'all');
 
         if ($selectedCategoryId === 'all') {
@@ -60,13 +40,6 @@ class HomeController extends Controller
         $totalPrice = array_sum(array_map(function ($item) {
             return $item['price'] * $item['product']['quantity'];
         }, $cart));
-
-        // $user = Auth::user();
-        // $cartItems = Cart::where('user_id', $user->id)->get();
-
-        // $totalPrice = $cartItems->sum(function ($item) {
-        //     return $item->price * $item->quantity;
-        // });
 
         return view('home', compact('category', 'product', 'selectedCategoryId', 'cart', 'totalPrice'));
     }

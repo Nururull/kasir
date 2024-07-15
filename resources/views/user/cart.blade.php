@@ -37,7 +37,15 @@
                                                             {{ $item['product']['name'] }}
                                                         </td>
                                                         <td>Rp. {{ number_format($item['price'], 2) }}</td>
-                                                        <td>{{ $item['product']['quantity'] }}</td>
+                                                        <td>
+                                                            {{-- {{ $item['product']['quantity'] }} --}}
+                                                            <form action="{{ route('cart.update', $index) }}" method="POST" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <input type="number" name="quantity" value="{{ $item['product']['quantity'] }}" min="1" style="width: 60px;" max="{{ $item['product']['max_quantity'] }}">
+                                                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                                            </form>
+                                                        </td>
                                                         <td>Rp.
                                                             {{ number_format($item['price'] * $item['product']['quantity'], 2) }}
                                                         </td>
@@ -74,3 +82,4 @@
     </div>
 </div>
 <!-- Modal Search End -->
+

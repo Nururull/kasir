@@ -8,9 +8,8 @@
         @foreach ($orders as $order)
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Order ID: {{ $order->id }}</h5>
-                    <p class="card-text">Total Harga: Rp. {{ number_format($order->total_price, 2) }}</p>
-                    <p class="card-text">Tanggal Pesanan: {{ $order->created_at->format('d M Y H:i') }}</p>
+                    <h5 class="card-title">Order ID: {{ $order->id }} - {{ $order->created_at->format('d M Y H:i') }}</h5>
+                    <p class="card-text">Nama Lengkap: {{ $order->user->name }}</p>
                     <table class="table">
                         <thead>
                             <tr>
